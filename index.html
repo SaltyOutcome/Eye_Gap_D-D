@@ -31,13 +31,22 @@
         background-color: #4CAF50; /* Darker green */
     }
     .separated {
-        background-color: #FF4136; /* Darker red */
+        background-color: #ff0000; /* Darker red */
     }
     .separated-2 {
         background-color: #3498db; /* Blue */
     }
     .separated-3 {
         background-color: #f1c40f; /* Yellow */
+    }
+    .separated-4 {
+        background-color: #FF7A3C; /* Orange for separated by 4 */
+    }
+    .separated-5 {
+        background-color: #8546BA; /* Purple for separated by 5 */
+    }
+    .separated-6 {
+        background-color: #008080; /* Teal for separated by 6 */
     }
     .toggle-container {
         margin-bottom: 20px;
@@ -68,6 +77,9 @@
         <button class="toggle-btn active" data-class="separated">Red</button>
         <button class="toggle-btn active" data-class="separated-2">Blue</button>
         <button class="toggle-btn active" data-class="separated-3">Yellow</button>
+        <button class="toggle-btn active" data-class="separated-4">Orange</button>
+        <button class="toggle-btn active" data-class="separated-5">Purple</button>
+        <button class="toggle-btn active" data-class="separated-6">Teal</button>
     </div>
     
     <ul>
@@ -75,14 +87,12 @@
         <li>Red: Numbers with the specified difference, separated by one number</li>
         <li>Blue: Numbers with the specified difference, separated by two numbers</li>
         <li>Yellow: Numbers with the specified difference, separated by three numbers</li>
+        <li>Orange: Numbers with the specified difference, separated by four numbers</li>
+        <li>Purple: Numbers with the specified difference, separated by five numbers</li>
+        <li>Teal: Numbers with the specified difference, separated by six numbers</li>
     </ul>
     
     <div id="output" style="overflow-x: auto; white-space: nowrap;">
-    </div>
-    
-    <h2>Summary of Highlighted and Non-Highlighted Numbers</h2>
-    <div id="summary">
-        <p>Loading summary...</p>
     </div>
 </div>
 
@@ -105,7 +115,10 @@ const activeClasses = {
     'adjacent': true,
     'separated': true,
     'separated-2': true,
-    'separated-3': true
+    'separated-3': true,
+    'separated-4': true,
+    'separated-5': true,
+    'separated-6': true
 };
 
 let differenceAmount = 1;
@@ -139,6 +152,18 @@ function highlightNumbers(numbers) {
             (i < numbers.length - 4 && Math.abs(currentNum - parseInt(numbers[i + 4])) === differenceAmount))) {
             classes.push('separated-3');
         }
+        if (activeClasses['separated-4'] && ((i > 4 && Math.abs(currentNum - parseInt(numbers[i - 5])) === differenceAmount) ||
+            (i < numbers.length - 5 && Math.abs(currentNum - parseInt(numbers[i + 5])) === differenceAmount))) {
+            classes.push('separated-4');
+        }
+        if (activeClasses['separated-5'] && ((i > 5 && Math.abs(currentNum - parseInt(numbers[i - 6])) === differenceAmount) ||
+            (i < numbers.length - 6 && Math.abs(currentNum - parseInt(numbers[i + 6])) === differenceAmount))) {
+            classes.push('separated-5');
+        }
+        if (activeClasses['separated-6'] && ((i > 6 && Math.abs(currentNum - parseInt(numbers[i - 7])) === differenceAmount) ||
+            (i < numbers.length - 7 && Math.abs(currentNum - parseInt(numbers[i + 7])) === differenceAmount))) {
+            classes.push('separated-6');
+        }
 
         if (classes.length > 0) {
             if (classes.length === 1) {
@@ -147,9 +172,12 @@ function highlightNumbers(numbers) {
                 let gradientColors = classes.map(cls => {
                     switch(cls) {
                         case 'adjacent': return '#4CAF50';
-                        case 'separated': return '#FF4136';
+                        case 'separated': return '#ff0000';
                         case 'separated-2': return '#3498db';
                         case 'separated-3': return '#f1c40f';
+                        case 'separated-4': return '#FF7A3C';
+                        case 'separated-5': return '#8546BA';
+                        case 'separated-6': return '#008080';
                     }
                 });
                 let gradient = `linear-gradient(to right, ${gradientColors.join(', ')})`;
@@ -191,40 +219,6 @@ function updateDisplay() {
 
     generateSummary();
     addHoverEffect();
-}
-
-function generateSummary() {
-    const allNumbers = new Set();
-    const highlightedNumbers = new Set();
-
-    strings.forEach(str => {
-        const numbers = str.split(',').map(num => parseInt(num));
-        numbers.forEach((num, i) => {
-            allNumbers.add(num);
-            for (let j = Math.max(0, i - 4); j <= Math.min(numbers.length - 1, i + 4); j++) {
-                if (i !== j && Math.abs(numbers[i] - numbers[j]) === differenceAmount) {
-                    const diff = Math.abs(i - j);
-                    if ((diff === 1 && activeClasses['adjacent']) ||
-                        (diff === 2 && activeClasses['separated']) ||
-                        (diff === 3 && activeClasses['separated-2']) ||
-                        (diff === 4 && activeClasses['separated-3'])) {
-                        highlightedNumbers.add(num);
-                        break;
-                    }
-                }
-            }
-        });
-    });
-
-    const nonHighlightedNumbers = [...allNumbers].filter(num => !highlightedNumbers.has(num));
-
-    const summaryDiv = document.getElementById('summary');
-    summaryDiv.innerHTML = `
-        <h3>Highlighted Numbers:</h3>
-        <p>${[...highlightedNumbers].sort((a, b) => a - b).join(', ')}</p>
-        <h3>Non-Highlighted Numbers:</h3>
-        <p>${nonHighlightedNumbers.sort((a, b) => a - b).join(', ')}</p>
-    `;
 }
 
 function addHoverEffect() {
