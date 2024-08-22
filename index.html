@@ -28,10 +28,10 @@
         cursor: pointer;
     }
     .adjacent {
-        background-color: #4CAF50; /* Darker green */
+        background-color: #2F7532; /* Green */
     }
     .separated {
-        background-color: #ff0000; /* Darker red */
+        background-color: #ff0000; /* Red */
     }
     .separated-2 {
         background-color: #3498db; /* Blue */
@@ -40,13 +40,16 @@
         background-color: #f1c40f; /* Yellow */
     }
     .separated-4 {
-        background-color: #FF7A3C; /* Orange for separated by 4 */
+        background-color: #FF7A3C; /* Orange */
     }
     .separated-5 {
-        background-color: #8546BA; /* Purple for separated by 5 */
+        background-color: #8546BA; /* Purple */
     }
     .separated-6 {
-        background-color: #008080; /* Teal for separated by 6 */
+        background-color: #008080; /* Teal */
+    }
+    .separated-7 {
+        background-color: #6AD76A; /* Mint */
     }
     .toggle-container {
         margin-bottom: 20px;
@@ -80,6 +83,7 @@
         <button class="toggle-btn active" data-class="separated-4">Orange</button>
         <button class="toggle-btn active" data-class="separated-5">Purple</button>
         <button class="toggle-btn active" data-class="separated-6">Teal</button>
+        <button class="toggle-btn active" data-class="separated-7">Mint</button>
     </div>
     
     <ul>
@@ -90,6 +94,7 @@
         <li>Orange: Numbers with the specified difference, separated by four numbers</li>
         <li>Purple: Numbers with the specified difference, separated by five numbers</li>
         <li>Teal: Numbers with the specified difference, separated by six numbers</li>
+        <li>Mint: Numbers with the specified difference, separated by seven numbers</li>
     </ul>
     
     <div id="output" style="overflow-x: auto; white-space: nowrap;">
@@ -118,7 +123,8 @@ const activeClasses = {
     'separated-3': true,
     'separated-4': true,
     'separated-5': true,
-    'separated-6': true
+    'separated-6': true,
+    'separated-7': true
 };
 
 let differenceAmount = 1;
@@ -164,6 +170,10 @@ function highlightNumbers(numbers) {
             (i < numbers.length - 7 && Math.abs(currentNum - parseInt(numbers[i + 7])) === differenceAmount))) {
             classes.push('separated-6');
         }
+        if (activeClasses['separated-7'] && ((i > 7 && Math.abs(currentNum - parseInt(numbers[i - 8])) === differenceAmount) ||
+            (i < numbers.length - 8 && Math.abs(currentNum - parseInt(numbers[i + 8])) === differenceAmount))) {
+            classes.push('separated-7');
+        }
 
         if (classes.length > 0) {
             if (classes.length === 1) {
@@ -171,13 +181,14 @@ function highlightNumbers(numbers) {
             } else {
                 let gradientColors = classes.map(cls => {
                     switch(cls) {
-                        case 'adjacent': return '#4CAF50';
+                        case 'adjacent': return '#2F7532';
                         case 'separated': return '#ff0000';
                         case 'separated-2': return '#3498db';
                         case 'separated-3': return '#f1c40f';
                         case 'separated-4': return '#FF7A3C';
                         case 'separated-5': return '#8546BA';
                         case 'separated-6': return '#008080';
+                        case 'separated-7': return '#6AD76A ';
                     }
                 });
                 let gradient = `linear-gradient(to right, ${gradientColors.join(', ')})`;
