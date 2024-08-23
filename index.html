@@ -26,6 +26,10 @@
         background-color: #e0e0e0;
         font-size: 0.8em;
         cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .index:hover {
+        background-color: #c0c0c0;
     }
     .adjacent {
         background-color: #2F7532; /* Green */
@@ -60,10 +64,10 @@
     .separated-10 {
         background-color: #40E0D0; /* Turquoise */
     }
-    .toggle-container {
+    .toggle-container, .string-toggle-container {
         margin-bottom: 20px;
     }
-    .toggle-btn {
+    .toggle-btn, .string-toggle-btn {
         margin-right: 10px;
         padding: 5px 10px;
         cursor: pointer;
@@ -76,8 +80,24 @@
     }
     .highlighted {
         outline: 2px solid black;
+        transition: outline 0.3s ease;
     }
-</style>
+    .number {
+        transition: transform 0.3s ease;
+    }
+    .number:hover {
+        transform: scale(1.1);
+    }
+    .string-toggle-btn {
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+    .string-toggle-btn.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+</style></head><body>
 
 <div class="container">
     <h1>Eye Differences</h1>
@@ -96,6 +116,18 @@
         <button class="toggle-btn active" data-class="separated-8">Olive</button>
         <button class="toggle-btn active" data-class="separated-9">Pink</button>
         <button class="toggle-btn active" data-class="separated-10">Turquoise</button>
+    </div>
+    
+    <div class="string-toggle-container">
+        <button class="string-toggle-btn active" data-string="E1">E1</button>
+        <button class="string-toggle-btn active" data-string="W1">W1</button>
+        <button class="string-toggle-btn active" data-string="E2">E2</button>
+        <button class="string-toggle-btn active" data-string="W2">W2</button>
+        <button class="string-toggle-btn active" data-string="E3">E3</button>
+        <button class="string-toggle-btn active" data-string="W3">W3</button>
+        <button class="string-toggle-btn active" data-string="E4">E4</button>
+        <button class="string-toggle-btn active" data-string="W4">W4</button>
+        <button class="string-toggle-btn active" data-string="E5">E5</button>
     </div>
     
     <ul>
@@ -143,6 +175,18 @@ const activeClasses = {
     'separated-8': true,
     'separated-9': true,
     'separated-10': true
+};
+
+const activeStrings = {
+    'E1': true,
+    'W1': true,
+    'E2': true,
+    'W2': true,
+    'E3': true,
+    'W3': true,
+    'E4': true,
+    'W4': true,
+    'E5': true
 };
 
 let differenceAmount = 1;
@@ -256,12 +300,13 @@ function updateDisplay() {
     outputDiv.innerHTML += `<div class="string-container"><h2>Position Index</h2><div>${positionIndex}</div></div>`;
 
     strings.forEach((str, index) => {
-        const numbers = str.split(',');
-        const highlightedNumbers = highlightNumbers(numbers);
-        outputDiv.innerHTML += `<div class="string-container"><h2>${stringNames[index]}</h2><div>${highlightedNumbers}</div></div>`;
+        if (activeStrings[stringNames[index]]) {
+            const numbers = str.split(',');
+            const highlightedNumbers = highlightNumbers(numbers);
+            outputDiv.innerHTML += `<div class="string-container"><h2>${stringNames[index]}</h2><div>${highlightedNumbers}</div></div>`;
+        }
     });
 
-    generateSummary();
     addHoverEffect();
 }
 
@@ -281,12 +326,37 @@ function addHoverEffect() {
             });
         });
     });
+
+    const numbers = document.querySelectorAll('.number');
+    numbers.forEach(number => {
+        number.addEventListener('mouseenter', function() {
+            const dataIndex = this.getAttribute('data-index');
+            document.querySelectorAll(`.index[data-index="${dataIndex}"]`).forEach(idx => {
+                idx.classList.add('highlighted');
+            });
+        });
+        number.addEventListener('mouseleave', function() {
+            const dataIndex = this.getAttribute('data-index');
+            document.querySelectorAll(`.index[data-index="${dataIndex}"]`).forEach(idx => {
+                idx.classList.remove('highlighted');
+            });
+        });
+    });
 }
 
 document.querySelectorAll('.toggle-btn').forEach(btn => {
     btn.addEventListener('click', function() {
         const className = this.getAttribute('data-class');
         activeClasses[className] = !activeClasses[className];
+        this.classList.toggle('active');
+        updateDisplay();
+    });
+});
+
+document.querySelectorAll('.string-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const stringName = this.getAttribute('data-string');
+        activeStrings[stringName] = !activeStrings[stringName];
         this.classList.toggle('active');
         updateDisplay();
     });
