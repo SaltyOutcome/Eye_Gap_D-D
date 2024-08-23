@@ -64,6 +64,15 @@
     .separated-10 {
         background-color: #40E0D0; /* Turquoise */
     }
+    .separated-11 {
+        background-color: #9D9D9D; /* Lightgray */
+    }
+    .separated-12 {
+        background-color: #5F5F5F; /* Darkgray */
+    }
+    .separated-13 {
+        background-color: #353735; /* Black */
+    }
     .toggle-container, .string-toggle-container {
         margin-bottom: 20px;
     }
@@ -105,17 +114,20 @@
     <div class="toggle-container">
         <label for="difference-input">Difference Amount:</label>
         <input type="number" id="difference-input" value="1" min="0" max="82">
-        <button class="toggle-btn active" data-class="adjacent">Green</button>
-        <button class="toggle-btn active" data-class="separated">Red</button>
-        <button class="toggle-btn active" data-class="separated-2">Blue</button>
-        <button class="toggle-btn active" data-class="separated-3">Yellow</button>
-        <button class="toggle-btn active" data-class="separated-4">Orange</button>
-        <button class="toggle-btn active" data-class="separated-5">Purple</button>
-        <button class="toggle-btn active" data-class="separated-6">Teal</button>
-        <button class="toggle-btn active" data-class="separated-7">Mint</button>
-        <button class="toggle-btn active" data-class="separated-8">Olive</button>
-        <button class="toggle-btn active" data-class="separated-9">Pink</button>
-        <button class="toggle-btn active" data-class="separated-10">Turquoise</button>
+        <button class="toggle-btn active" data-class="adjacent">ADJ</button>
+        <button class="toggle-btn active" data-class="separated">1 Gap</button>
+        <button class="toggle-btn active" data-class="separated-2">2 Gap</button>
+        <button class="toggle-btn active" data-class="separated-3">3 Gap</button>
+        <button class="toggle-btn active" data-class="separated-4">4 Gap</button>
+        <button class="toggle-btn active" data-class="separated-5">5 Gap</button>
+        <button class="toggle-btn active" data-class="separated-6">6 Gap</button>
+        <button class="toggle-btn active" data-class="separated-7">7 Gap</button>
+        <button class="toggle-btn active" data-class="separated-8">8 Gap</button>
+        <button class="toggle-btn active" data-class="separated-9">9 Gap</button>
+        <button class="toggle-btn active" data-class="separated-10">10 Gap</button>
+        <button class="toggle-btn active" data-class="separated-11">11 Gap</button>
+        <button class="toggle-btn active" data-class="separated-12">12 Gap</button>
+        <button class="toggle-btn active" data-class="separated-13">13 Gap</button>
     </div>
     
     <div class="string-toggle-container">
@@ -131,17 +143,20 @@
     </div>
     
     <ul>
-        <li>Green: Adjacent numbers with the specified difference</li>
-        <li>Red: Numbers with the specified difference, separated by 1 number</li>
-        <li>Blue: Numbers with the specified difference, separated by 2 numbers</li>
-        <li>Yellow: Numbers with the specified difference, separated by 3 numbers</li>
-        <li>Orange: Numbers with the specified difference, separated by 4 numbers</li>
-        <li>Purple: Numbers with the specified difference, separated by 5 numbers</li>
-        <li>Teal: Numbers with the specified difference, separated by 6 numbers</li>
-        <li>Mint: Numbers with the specified difference, separated by 7 numbers</li>
-        <li>Olive: Numbers with the specified difference, separated by 8 numbers</li>
-        <li>Pink: Numbers with the specified difference, separated by 9 numbers</li>
-        <li>Turquoise: Numbers with the specified difference, separated by 10 numbers</li>
+        <li>Green: Adjacent</li>
+        <li>Red: 1 Gap</li>
+        <li>Blue: 2 Gap</li>
+        <li>Yellow: 3 Gap</li>
+        <li>Orange: 4 Gap</li>
+        <li>Purple: 5 Gap</li>
+        <li>Teal: 6 Gap</li>
+        <li>Mint: 7 Gap</li>
+        <li>Olive: 8 Gap</li>
+        <li>Pink: 9 Gap</li>
+        <li>Turquoise: 10 Gap</li>
+        <li>Lightgray: 11 Gap</li>
+        <li>Darkgray: 12 Gap</li>
+        <li>Black: 13 Gap</li>
     </ul>
     
     <div id="output" style="overflow-x: auto; white-space: nowrap;">
@@ -174,7 +189,10 @@ const activeClasses = {
     'separated-7': true,
     'separated-8': true,
     'separated-9': true,
-    'separated-10': true
+    'separated-10': true,
+    'separated-11': true,
+    'separated-12': true,
+    'separated-13': true
 };
 
 const activeStrings = {
@@ -248,6 +266,18 @@ function highlightNumbers(numbers) {
             (i < numbers.length - 11 && Math.abs(currentNum - parseInt(numbers[i + 11])) === differenceAmount))) {
             classes.push('separated-10');
         }
+        if (activeClasses['separated-11'] && ((i > 11 && Math.abs(currentNum - parseInt(numbers[i - 12])) === differenceAmount) ||
+            (i < numbers.length - 12 && Math.abs(currentNum - parseInt(numbers[i + 12])) === differenceAmount))) {
+            classes.push('separated-11');
+        }
+        if (activeClasses['separated-12'] && ((i > 12 && Math.abs(currentNum - parseInt(numbers[i - 13])) === differenceAmount) ||
+            (i < numbers.length - 13 && Math.abs(currentNum - parseInt(numbers[i + 13])) === differenceAmount))) {
+            classes.push('separated-12');
+        }
+        if (activeClasses['separated-13'] && ((i > 13 && Math.abs(currentNum - parseInt(numbers[i - 14])) === differenceAmount) ||
+            (i < numbers.length - 14 && Math.abs(currentNum - parseInt(numbers[i + 14])) === differenceAmount))) {
+            classes.push('separated-13');
+        }
 
         if (classes.length > 0) {
             if (classes.length === 1) {
@@ -266,6 +296,9 @@ function highlightNumbers(numbers) {
                         case 'separated-8': return '#808000';
                         case 'separated-9': return '#DB7093';
                         case 'separated-10': return '#40E0D0';
+                        case 'separated-11': return '#9D9D9D';
+                        case 'separated-12': return '#5F5F5F';
+                        case 'separated-13': return '#353735';
                     }
                 });
                 let gradient = `linear-gradient(to right, ${gradientColors.join(', ')})`;
