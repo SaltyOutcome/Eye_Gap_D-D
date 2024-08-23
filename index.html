@@ -51,6 +51,15 @@
     .separated-7 {
         background-color: #6AD76A; /* Mint */
     }
+    .separated-8 {
+        background-color: #808000; /* Olive */
+    }
+    .separated-9 {
+        background-color: #DB7093; /* Pink */
+    }
+    .separated-10 {
+        background-color: #40E0D0; /* Turquoise */
+    }
     .toggle-container {
         margin-bottom: 20px;
     }
@@ -84,17 +93,23 @@
         <button class="toggle-btn active" data-class="separated-5">Purple</button>
         <button class="toggle-btn active" data-class="separated-6">Teal</button>
         <button class="toggle-btn active" data-class="separated-7">Mint</button>
+        <button class="toggle-btn active" data-class="separated-8">Olive</button>
+        <button class="toggle-btn active" data-class="separated-9">Pink</button>
+        <button class="toggle-btn active" data-class="separated-10">Turquoise</button>
     </div>
     
     <ul>
         <li>Green: Adjacent numbers with the specified difference</li>
-        <li>Red: Numbers with the specified difference, separated by one number</li>
-        <li>Blue: Numbers with the specified difference, separated by two numbers</li>
-        <li>Yellow: Numbers with the specified difference, separated by three numbers</li>
-        <li>Orange: Numbers with the specified difference, separated by four numbers</li>
-        <li>Purple: Numbers with the specified difference, separated by five numbers</li>
-        <li>Teal: Numbers with the specified difference, separated by six numbers</li>
-        <li>Mint: Numbers with the specified difference, separated by seven numbers</li>
+        <li>Red: Numbers with the specified difference, separated by 1 number</li>
+        <li>Blue: Numbers with the specified difference, separated by 2 numbers</li>
+        <li>Yellow: Numbers with the specified difference, separated by 3 numbers</li>
+        <li>Orange: Numbers with the specified difference, separated by 4 numbers</li>
+        <li>Purple: Numbers with the specified difference, separated by 5 numbers</li>
+        <li>Teal: Numbers with the specified difference, separated by 6 numbers</li>
+        <li>Mint: Numbers with the specified difference, separated by 7 numbers</li>
+        <li>Olive: Numbers with the specified difference, separated by 8 numbers</li>
+        <li>Pink: Numbers with the specified difference, separated by 9 numbers</li>
+        <li>Turquoise: Numbers with the specified difference, separated by 10 numbers</li>
     </ul>
     
     <div id="output" style="overflow-x: auto; white-space: nowrap;">
@@ -124,7 +139,10 @@ const activeClasses = {
     'separated-4': true,
     'separated-5': true,
     'separated-6': true,
-    'separated-7': true
+    'separated-7': true,
+    'separated-8': true,
+    'separated-9': true,
+    'separated-10': true
 };
 
 let differenceAmount = 1;
@@ -174,6 +192,18 @@ function highlightNumbers(numbers) {
             (i < numbers.length - 8 && Math.abs(currentNum - parseInt(numbers[i + 8])) === differenceAmount))) {
             classes.push('separated-7');
         }
+        if (activeClasses['separated-8'] && ((i > 8 && Math.abs(currentNum - parseInt(numbers[i - 9])) === differenceAmount) ||
+            (i < numbers.length - 9 && Math.abs(currentNum - parseInt(numbers[i + 9])) === differenceAmount))) {
+            classes.push('separated-8');
+        }
+        if (activeClasses['separated-9'] && ((i > 9 && Math.abs(currentNum - parseInt(numbers[i - 10])) === differenceAmount) ||
+            (i < numbers.length - 10 && Math.abs(currentNum - parseInt(numbers[i + 10])) === differenceAmount))) {
+            classes.push('separated-9');
+        }
+        if (activeClasses['separated-10'] && ((i > 10 && Math.abs(currentNum - parseInt(numbers[i - 11])) === differenceAmount) ||
+            (i < numbers.length - 11 && Math.abs(currentNum - parseInt(numbers[i + 11])) === differenceAmount))) {
+            classes.push('separated-10');
+        }
 
         if (classes.length > 0) {
             if (classes.length === 1) {
@@ -189,6 +219,9 @@ function highlightNumbers(numbers) {
                         case 'separated-5': return '#8546BA';
                         case 'separated-6': return '#008080';
                         case 'separated-7': return '#6AD76A';
+                        case 'separated-8': return '#808000';
+                        case 'separated-9': return '#DB7093';
+                        case 'separated-10': return '#40E0D0';
                     }
                 });
                 let gradient = `linear-gradient(to right, ${gradientColors.join(', ')})`;
