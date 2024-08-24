@@ -115,8 +115,6 @@
     <h1>Eye Differences</h1>
     
     <div class="toggle-container">
-        <button class="toggle-btn active" data-class="separated-custom">Custom Gap</button>
-        <input type="number" id="custom-gap-input" value="14" min="14" max="125">
         <button class="toggle-btn active" data-class="adjacent">ADJ</button>
         <button class="toggle-btn active" data-class="separated">1 Gap</button>
         <button class="toggle-btn active" data-class="separated-2">2 Gap</button>
@@ -131,8 +129,11 @@
         <button class="toggle-btn active" data-class="separated-11">11 Gap</button>
         <button class="toggle-btn active" data-class="separated-12">12 Gap</button>
         <button class="toggle-btn active" data-class="separated-13">13 Gap</button>
-        <label for="difference-input">Difference Amount:</label>
-        <input type="number" id="difference-input" value="1" min="1" max="82">
+    </div>
+    
+    <div class="toggle-container">
+        <button class="toggle-btn active" data-class="separated-custom">Custom Gap</button>
+        <input type="number" id="custom-gap-input" value="14" min="14" max="125">
     </div>
     
     <div class="string-toggle-container">
@@ -164,6 +165,11 @@
         <li>Black: 13 Gap</li>
         <li>Darkpink: Custom Gap</li>
     </ul>
+    
+    <div class="toggle-container">
+        <label for="difference-input">Difference Amount:</label>
+        <input type="number" id="difference-input" value="1" min="1" max="82">
+    </div>
     
     <div id="output" style="overflow-x: auto; white-space: nowrap;">
     </div>
